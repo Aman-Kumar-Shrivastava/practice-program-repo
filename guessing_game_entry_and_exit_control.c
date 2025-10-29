@@ -2,8 +2,34 @@
 #include <stdlib.h>
 #include <time.h>
 
+int guessing_game();
+
 int main()
 {
+    printf("1.start the guessing game\n");
+    printf("2.exit\n");
+    printf("chooose btw option 1 and 2\n");
+
+    int choice;
+    scanf("%d", &choice);
+
+    if (choice == 1)
+    {
+        guessing_game();
+    }
+    else if (choice == 2)
+    {
+        printf("Exiting the program. Goodbye!\n");
+    }
+    else
+    {
+        printf("Invalid choice . Please select 1 or 2.\n");
+    }
+    return 0;
+}
+int guessing_game()
+{
+
     int random, guess;
     int attempts = 0;
 
