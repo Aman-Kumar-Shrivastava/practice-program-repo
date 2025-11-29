@@ -1,0 +1,34 @@
+function createNavbar(menuItems, options = {}) {
+    // Step 1: Validate input to handle errors (e.g., non-array or empty array)
+    if (!Array.isArray(menuItems)) {
+        throw new Error("menuItems must be an array of strings.");  // Error handling: Prevents runtime issues if invalid type is passed
+    }
+    if (menuItems.length === 0) {
+        throw new Error("menuItems array cannot be empty.");  // Error handling: Ensures at least one item for a functional navbar
+    }
+    
+    // Step 2: Set default options for flexibility (readability: clear defaults)
+    const baseUrl = options.baseUrl || '#';  // Default to anchor links; can be customized to '/page/' for routing
+    const hoverColor = options.hoverColor || '#f0f0f0';  // Default hover color; customizable for theming
+    
+    // Step 3: Build the HTML string efficiently (performance: simple string concatenation, no loops over large data)
+    let html = '<nav style="background-color: #333; padding: 10px;">';  // Start nav with basic styling
+    html += '<ul style="list-style: none; margin: 0; padding: 0; display: flex;">';  // Flexbox for horizontal layout
+    
+    // Step 4: Loop through menu items to create list items (readability: straightforward loop)
+    menuItems.forEach(item => {
+        if (typeof item !== 'string' || item.trim() === '') {
+            throw new Error("Each menu item must be a non-empty string.");  // Error handling: Ensures clean data
+        }
+        const slug = item.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');  // Slugify for URL (e.g., "Battle of Brands" -> "battle-of-brands")
+        html += `<li style="margin-right: 20px;"><a href="${baseUrl}${slug}" style="color: white; text-decoration: none; padding: 10px; display: block;">${item}</a></li>`;
+    });
+    
+    html += '</ul>';  // Close ul
+    // Step 5: Add CSS for hover effect (performance: embedded CSS avoids external files; memory: minimal)
+    html += `<style>nav ul li a:hover { background-color: ${hoverColor}; color: black; }</style>`;
+    html += '</nav>';  // Close nav
+    
+    // Step 6: Return the complete HTML string (no side effects, pure function for testability)
+    return html;
+}
